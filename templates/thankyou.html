@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block msg %}{% include "message.html" %}{% endblock %}
+{% block content %}
+<a href="{% url 'index' %}">返回首页</a>
+{% endblock %}

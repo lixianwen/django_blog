@@ -1,0 +1,57 @@
+{% load comments %}
+<!-- 统计文章评论数 -->
+{% if entry.enable_comments %}
+    {% get_comment_count for entry as comment_count %}
+    <p>此篇文章共有<em>{{ comment_count }}</em>条评论</p>
+{% endif %}
+
+<!-- 遍历评论 -->
+{% if comment_count %}
+    {% get_comment_list for entry as comment_list %}
+    <ul>
+    {% for comment in comment_list %}
+        <li>Posted by: {{ comment.user_name }} on {{ comment.submit_date }}</li>
+        <li>Comment: {{ comment.comment }}</li><br/>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<!-- 显示评论表单 -->
+<div>
+    {% if entry.enable_comments %}
+    {% get_comment_form for entry as form %}
+    <form action="{% comment_form_target %}" method="post">
+        {% csrf_token %}
+        <p>
+            <label for="id_name">Name:</label>
+            <input type="text" name="name" required id="id_name" maxlength="50" />
+        </p>
+        <p>
+            <label for="id_email">Email address:</label>
+            <input type="email" name="email" required id="id_email" />
+        </p>
+        <p>
+            <label for="id_url">URL:</label>
+            <input type="url" name="url" id="id_url" />
+        </p>
+        <p>
+            <label for="id_comment">Comment:</label>
+            <textarea name="comment" id="id_comment" required rows="3" cols="50" maxlength="300"></textarea>
+        </p>
+        <div>
+            {{ form.content_type }}
+            {{ form.object_pk }}
+            {{ form.timestamp }}
+            {{ form.security_hash }}
+            <span style="display: none;"><input type="text" name="honeypot" id="id_honeypot" /></span>
+        </div>
+        <p class="submit">
+             <input type="submit" name="post" class="submit-post" value="Post"/>
+             <input type="submit" name="preview" class="submit-preview" value="Preview"/>
+             <input type="hidden" name="next" value="{% url "showentry" %}?p={{ entry.id }}">
+        </p>
+    </form>
+    {% else %}
+        <small>此文章暂时关闭了评论</small>
+    {% endif %}
+</div>

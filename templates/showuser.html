@@ -1,0 +1,6 @@
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }} <a href="{% url 'logoutview' %}">退出</a></p>
+{% else %}
+    <a style="text-align: right" href="{% url 'loginview' %}" target="_blank">登录</a>
+    <a style="text-align: right" href="{% url 'register' %}" target="_blank">注册</a>
+{% endif %}

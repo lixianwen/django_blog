@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "showuser.html" %}
+<ul>
+    {% if entry %}
+        <li>{{ entry.title }}</li>
+        <ul>
+            <li>{{ entry.body|safe }}</li>
+                <ul>
+                    <small><li>Post at {{ entry.pub_date }} by {{ entry.author.name }}</li></small>
+                </ul>
+                    {% include "blog/comment.html" %}
+        </ul>
+    {% else %}
+        <em>No articles published yet, you may want to <a href="{% url 'addentry' %}">publish an entry</a></em>
+    {% endif %}
+</ul>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block msg %}{% include "message.html" %}{% endblock %}
+{% block content %}
+{% include "showuser.html" %}
+<a href="{% url 'addentry' %}">发表文章</a>
+<div>
+<p>文章列表</p>
+{% for entry in entrys %}
+        <a href="{% url "showentry" %}?p={{ entry.id }}">{{ entry.title }}</a><br/>
+{% empty %}
+    <em>no entry beed added yet, maybe you want to <a href="{% url "addentry" %}">add one</a></em>
+{% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if entrys.has_previous %}
+            <a href="?page={{ entrys.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="active">
+            Page {{ entrys.number }} of {{ entrys.paginator.num_pages }}.
+        </span>
+
+        {% if entrys.has_next %}
+            <a href="?page={{ entrys.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

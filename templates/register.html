@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block msg %}{% include "message.html" %}{% endblock %}
+{% block content %}
+<h3>欢迎注册</h3>
+<h4>已有帐号？<a href="{% url 'loginview' %}">请登录</a></h4>
+<div id="form-item-accout">
+<form method="post" action="">
+    {% csrf_token %}
+    <p>
+        <label for="regname">用户名</label>
+        <input id="regname" tabindex="1" type="text"  autofocus autocomplete="off" required name="username" placeholder="您的账户名和登录名">
+    </p>
+    <p>
+        <label for="regpwd">设置密码</label>
+        <input id="regpwd" type="password" tabindex="2" autocomplete="off" required name="password" placeholder="建议至少使用两种字符组合" size="25">
+    </p>
+    <p>
+        <label for="regpwdrepeat">确认密码</label>
+        <input id="regpwdrepeat" tabindex="3" type="password" autocomplete="off" required name="pwdrepeat" size="25">
+    </p>
+    <p>
+        <label for="regemail">邮箱地址</label>
+        <input id="regemail" tabindex="4" type="email" autocomplete="off" name="email">
+    </p>
+    <p>
+        <label for="verify">随机码</label>
+        <input id="verify" type="text" required name="verifycode" placeholder="请输入验证码">
+        <img src="{% url 'image' %}">
+    </p>
+    <input type="submit" value="Submit"> <input type="reset" value="重置按钮">
+</form>
+</div>
+{% endblock %}

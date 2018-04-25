@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="">
+    {% csrf_token %}
+    <p>
+        <label for="_title">标题</label>
+        <input id="_title" tabindex="1" type="text" maxlength="250" autofocus requeired name="title">
+    </p>
+    <p>正文:</p>
+    <div>
+        <textarea tabindex="2" cols="50" rows="10" wrap="hard" id="_body" name="context"></textarea>
+    </div>
+    <p>
+        <label for="_author">作者：</label><br/>
+        {% for item in author_list %}
+            <input id="_author" type="radio" name="author" value="{{ item }}">{{ item }}<br/>
+        {% empty %}
+            <em>author not found</em>
+        {% endfor %}
+    </p>
+    <p>
+        <label for="comment">是否允许评论</label>
+
+        <input id="comment" type="checkbox" name="can_comment" value="True">
+    </p>
+        <input type="submit" value="Submit"> <input type="reset" value="重置按钮">
+</form>
+{% endblock %}
